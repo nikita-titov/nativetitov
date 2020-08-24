@@ -16,20 +16,11 @@ const Auth = (props) => {
   const [login, setLogin] = useState('');
   const [pass, setPass] = useState('');
   const [showPass, setShowPass] = useState(true);
-  const [error, setError] = useState(false);
   const [activeBtn, setActiveBtn] = useState(false);
 
   const colorBtn = activeBtn ? '#FE4E27' : 'rgba(35, 38, 54, 0.9)';
   const colorBtnText = activeBtn ? 'white' : '#656D8A';
   const passIcon = showPass ? 'eye-outline' : 'eye-off-outline';
-
-  useEffect(() => {
-    if (store.isError) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-  }, [store.isError]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -41,7 +32,6 @@ const Auth = (props) => {
         }
       });
       return () => {
-        setError(false);
         setLogin('');
         setPass('');
       };
@@ -91,7 +81,9 @@ const Auth = (props) => {
         label="Пароль"
         mode="outlined"
       />
-      {!!error && <Text style={styles.error}>Неверный логин или пароль</Text>}
+      {store.isError && (
+        <Text style={styles.error}>Неверный логин или пароль</Text>
+      )}
       <View style={styles.buttonBlock}>
         <Button
           style={styles.button}

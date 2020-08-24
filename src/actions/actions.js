@@ -11,8 +11,8 @@ import {
   VALIDATE_RES_TOKEN,
   SESSION_ID,
   VALIDATE_ERROR,
-  LOGUT,
-  CURENT_USER,
+  LOGOUT,
+  CURRENT_USER,
 } from '../actions/actionsType.js';
 import axios from 'axios';
 
@@ -72,7 +72,7 @@ export const loginUser = (login, pass, nav) => (dispatch) => {
               isError: true,
             },
           });
-          console.log('LOGGIN FAILED', e.response.data.success);
+          console.log('LOG IN FAILED', e.response.data.success);
         });
     }
   });
@@ -83,7 +83,7 @@ export const getUserInfo = () => (dispatch) => {
   AsyncStorage.getItem('session_id').then((session_id) => {
     axios.get(`${GET_INFO}&session_id=${session_id}`).then((res) => {
       dispatch({
-        type: CURENT_USER,
+        type: CURRENT_USER,
         payload: {
           current_user: res.data,
         },
@@ -103,7 +103,7 @@ export const logout = (nav, session_id) => (dispatch) => {
         AsyncStorage.removeItem('session_id');
         AsyncStorage.removeItem('request_token');
         dispatch({
-          type: LOGUT,
+          type: LOGOUT,
           payload: {
             requestToken: null,
             isValidateToken: false,

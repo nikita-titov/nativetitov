@@ -3,8 +3,8 @@ import {
   VALIDATE_RES_TOKEN,
   SESSION_ID,
   VALIDATE_ERROR,
-  CURENT_USER,
-  LOGUT,
+  CURRENT_USER,
+  LOGOUT,
 } from '../../../actions/actionsType.js';
 
 const initialState = {
@@ -37,12 +37,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
       };
-    case CURENT_USER:
+    case CURRENT_USER:
       return {
         ...state,
         ...action.payload,
       };
-    case LOGUT:
+    case LOGOUT:
       return {
         ...state,
         ...action.payload,

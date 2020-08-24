@@ -1,25 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Text, Image, Dimensions} from 'react-native';
 import {Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
 
 // redux and actions
 import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '../../actions/actions.js';
+import {logout, getUserInfo} from '../../actions/actions.js';
 
 const Profile = (props) => {
   const dispatch = useDispatch();
-  const store = useSelector((state) => state.auth);
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-
-  useEffect(() => {
-    if (store.current_user) {
-      setName(store.current_user.name);
-      setUsername(store.current_user.username);
-    }
-  }, []);
+  const current_user = useSelector((state) => state.auth.current_user);
+  useEffect(() => dispatch(getUserInfo()), []);
 
   const submit = () => {
     AsyncStorage.getItem('session_id').then((session_id) => {
@@ -35,8 +27,8 @@ const Profile = (props) => {
           source={require('../../assets/img/user.png')}
         />
       </View>
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.email}>{username}</Text>
+      <Text style={styles.title}>{current_user && current_user.name}</Text>
+      <Text style={styles.email}>{current_user && current_user.username}</Text>
       <View style={styles.buttonBlock}>
         <Button
           style={styles.button}

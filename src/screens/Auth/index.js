@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, Dimensions} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {isEmpty} from 'lodash';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // redux and actions
 import {useDispatch, useSelector} from 'react-redux';
@@ -31,6 +33,13 @@ const Auth = (props) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      AsyncStorage.getItem('session_id').then((session_id) => {
+        if (session_id) {
+          props.navigation.navigate('Films');
+        } else {
+          props.navigation.navigate('Auth');
+        }
+      });
       return () => {
         setError(false);
         setLogin('');
@@ -89,7 +98,6 @@ const Auth = (props) => {
           contentStyle={{height: 56}}
           mode="contained"
           color={colorBtn}
-          // disableds={!activeBtn}
           onPress={submit}>
           <Text style={{color: colorBtnText}}>Войти</Text>
         </Button>
@@ -145,7 +153,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     width: Dimensions.get('window').width,
     position: 'absolute',
-    bottom: Dimensions.get('window').height / 20,
+    bottom: Dimensions.get('window').height / 15,
   },
   button: {
     height: 56,

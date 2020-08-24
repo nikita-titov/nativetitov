@@ -62,7 +62,6 @@ export const loginUser = (login, pass, nav) => (dispatch) => {
                   },
                 });
                 nav.navigate('Films');
-                dispatch(getUserInfo());
               }
             });
         })
@@ -101,7 +100,7 @@ export const logout = (nav, session_id) => (dispatch) => {
     })
     .then((res) => {
       if (res.data.success) {
-        AsyncStorage.removeItem('sessison_id');
+        AsyncStorage.removeItem('session_id');
         AsyncStorage.removeItem('request_token');
         dispatch({
           type: LOGUT,

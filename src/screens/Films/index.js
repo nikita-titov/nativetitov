@@ -12,11 +12,7 @@ import {Searchbar} from 'react-native-paper';
 const Films = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
-
-  useEffect(() => {
-    // check session_id in Async storage
-    props.navigation.navigate('Auth');
-  }, []);
+  useEffect(() => props.navigation.navigate('Auth'), []);
 
   return (
     <ImageBackground
